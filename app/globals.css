@@ -1,0 +1,37 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+body {
+  @apply bg-softWhite text-ink;
+  font-feature-settings: "rlig" 1, "calt" 1;
+}
+
+.gradient-border {
+  border-image: linear-gradient(135deg, #111111, #f97316) 1;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #fff1e6;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #111111;
+  border-radius: 999px;
+}
+
+.details-summary {
+  list-style: none;
+}
+
+.details-summary::-webkit-details-marker {
+  display: none;
+}
