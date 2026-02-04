@@ -60,7 +60,7 @@ export default function AnalyzerForm({
               ))}
             </div>
           </div>
-          <div>
+          <div className="md:col-span-2">
             <p className="text-sm font-semibold">Output</p>
             <div className="mt-2 flex rounded-xl border border-neutral-200 bg-neutral-50 p-1">
               {[

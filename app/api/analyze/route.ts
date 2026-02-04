@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { callMinara, normalizeMinaraResponse } from "@/lib/minara";
+import { callOpenAI, normalizeOpenAIResponse } from "@/lib/openai";
 import { isValidUrl } from "@/lib/utils";
 import type { AnalyzeRequest } from "@/lib/types";
 
@@ -11,13 +11,6 @@ function asErrorMessage(error: unknown) {
 }
 
 export async function POST(request: Request) {
-  if (!process.env.MINARA_API_KEY) {
-    return NextResponse.json(
-      { error: "MINARA_API_KEY is not configured." },
-      { status: 500 }
-    );
-  }
-
   const body = (await request.json()) as Partial<AnalyzeRequest>;
   const link = body.link?.trim();
   if (!link || !isValidUrl(link)) {
@@ -35,12 +28,19 @@ export async function POST(request: Request) {
     customPrompt
   };
 
+  if (!process.env.OPENAI_API_KEY) {
+    return NextResponse.json(
+      { error: "OPENAI_API_KEY is not configured." },
+      { status: 500 }
+    );
+  }
+
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 20000);
 
   try {
-    const raw = await callMinara(payload, controller.signal);
-    const normalized = normalizeMinaraResponse(raw, payload);
+    const raw = await callOpenAI(payload, controller.signal);
+    const normalized = normalizeOpenAIResponse(raw, payload);
     return NextResponse.json(normalized);
   } catch (error) {
     return NextResponse.json(

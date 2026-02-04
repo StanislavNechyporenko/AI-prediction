@@ -138,7 +138,7 @@ export default function HomePage() {
             OddsPulse
           </p>
           <h1 className="text-4xl font-semibold leading-tight md:text-5xl">
-            Fast, clean prediction-event analysis powered by Minara Agent API.
+            Fast, clean prediction-event analysis powered by OpenAI.
           </h1>
           <p className="max-w-2xl text-base text-black/80 md:text-lg">
             Paste any prediction market event link, surface model-estimated
