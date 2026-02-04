@@ -16,7 +16,6 @@ export type NormalizedResponse = {
 
 export type AnalyzeRequest = {
   link: string;
-  provider: "minara" | "openai";
   mode: "fast" | "expert";
   onlyResult: boolean;
   customPrompt: string;

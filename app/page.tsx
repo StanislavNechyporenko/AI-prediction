@@ -11,7 +11,6 @@ import type { HistoryEntry, NormalizedResponse } from "@/lib/types";
 
 const initialForm: AnalyzerFormValues = {
   link: "",
-  provider: "openai",
   mode: "expert",
   onlyResult: false,
   customPrompt: DEFAULT_PROMPT
@@ -54,7 +53,6 @@ export default function HomePage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           link: formValues.link,
-          provider: formValues.provider,
           mode: formValues.mode,
           onlyResult: formValues.onlyResult,
           customPrompt: formValues.customPrompt
@@ -74,7 +72,6 @@ export default function HomePage() {
         timestamp: Date.now(),
         request: {
           link: formValues.link,
-          provider: formValues.provider,
           mode: formValues.mode,
           onlyResult: formValues.onlyResult,
           customPrompt: formValues.customPrompt
@@ -94,7 +91,6 @@ export default function HomePage() {
     setResult(entry.response);
     setFormValues({
       link: entry.request.link,
-      provider: entry.request.provider,
       mode: entry.request.mode,
       onlyResult: entry.request.onlyResult,
       customPrompt: entry.request.customPrompt
@@ -142,7 +138,7 @@ export default function HomePage() {
             OddsPulse
           </p>
           <h1 className="text-4xl font-semibold leading-tight md:text-5xl">
-            Fast, clean prediction-event analysis powered by Minara Agent API.
+            Fast, clean prediction-event analysis powered by OpenAI.
           </h1>
           <p className="max-w-2xl text-base text-black/80 md:text-lg">
             Paste any prediction market event link, surface model-estimated

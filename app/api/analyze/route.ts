@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import { callMinara, normalizeMinaraResponse } from "@/lib/minara";
 import { callOpenAI, normalizeOpenAIResponse } from "@/lib/openai";
 import { isValidUrl } from "@/lib/utils";
 import type { AnalyzeRequest } from "@/lib/types";
@@ -18,33 +17,20 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Please provide a valid URL." }, { status: 400 });
   }
 
-  const provider =
-    body.provider === "openai" || body.provider === "minara"
-      ? body.provider
-      : process.env.OPENAI_API_KEY
-        ? "openai"
-        : "minara";
   const mode = body.mode === "fast" ? "fast" : "expert";
   const onlyResult = Boolean(body.onlyResult);
   const customPrompt = body.customPrompt?.trim() ?? "";
 
   const payload: AnalyzeRequest = {
     link,
-    provider,
     mode,
     onlyResult,
     customPrompt
   };
 
-  if (provider === "openai" && !process.env.OPENAI_API_KEY) {
+  if (!process.env.OPENAI_API_KEY) {
     return NextResponse.json(
       { error: "OPENAI_API_KEY is not configured." },
-      { status: 500 }
-    );
-  }
-  if (provider === "minara" && !process.env.MINARA_API_KEY) {
-    return NextResponse.json(
-      { error: "MINARA_API_KEY is not configured." },
       { status: 500 }
     );
   }
@@ -53,13 +39,8 @@ export async function POST(request: Request) {
   const timeout = setTimeout(() => controller.abort(), 20000);
 
   try {
-    if (provider === "openai") {
-      const raw = await callOpenAI(payload, controller.signal);
-      const normalized = normalizeOpenAIResponse(raw, payload);
-      return NextResponse.json(normalized);
-    }
-    const raw = await callMinara(payload, controller.signal);
-    const normalized = normalizeMinaraResponse(raw, payload);
+    const raw = await callOpenAI(payload, controller.signal);
+    const normalized = normalizeOpenAIResponse(raw, payload);
     return NextResponse.json(normalized);
   } catch (error) {
     return NextResponse.json(

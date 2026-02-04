@@ -155,9 +155,6 @@ export async function callMinara(
   request: AnalyzeRequest,
   signal?: AbortSignal
 ) {
-  if (request.provider !== "minara") {
-    throw new Error("Minara provider mismatch.");
-  }
   const response = await fetch(
     "https://api.minara.ai/v1/developer/prediction-market-ask",
     {

@@ -2,7 +2,6 @@ import { DEFAULT_PROMPT } from "@/lib/utils";
 
 export type AnalyzerFormValues = {
   link: string;
-  provider: "minara" | "openai";
   mode: "fast" | "expert";
   onlyResult: boolean;
   customPrompt: string;
@@ -40,34 +39,6 @@ export default function AnalyzerForm({
           />
         </div>
         <div className="grid gap-4 md:grid-cols-2">
-          <div>
-            <p className="text-sm font-semibold">Provider</p>
-            <div className="mt-2 flex rounded-xl border border-neutral-200 bg-neutral-50 p-1">
-              {[
-                { label: "Minara", value: "minara" },
-                { label: "OpenAI", value: "openai" }
-              ].map((option) => (
-                <button
-                  key={option.value}
-                  type="button"
-                  onClick={() =>
-                    onChange({ ...values, provider: option.value })
-                  }
-                  className={`flex-1 rounded-lg px-3 py-2 text-xs font-semibold uppercase transition ${
-                    values.provider === option.value
-                      ? "bg-black text-white"
-                      : "text-neutral-600 hover:text-black"
-                  }`}
-                >
-                  {option.label}
-                </button>
-              ))}
-            </div>
-            <p className="mt-2 text-xs text-neutral-500">
-              Choose OpenAI if you added <code>OPENAI_API_KEY</code>, or Minara for{" "}
-              <code>MINARA_API_KEY</code>.
-            </p>
-          </div>
           <div>
             <p className="text-sm font-semibold">Mode</p>
             <div className="mt-2 flex rounded-xl border border-neutral-200 bg-neutral-50 p-1">

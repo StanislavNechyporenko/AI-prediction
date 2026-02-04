@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "OddsPulse - Prediction Event Analyzer",
-  description: "Analyze prediction market events with Minara Agent API."
+  description: "Analyze prediction market events with OpenAI."
 };
 
 export default function RootLayout({
